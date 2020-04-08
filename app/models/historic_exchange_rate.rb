@@ -1,0 +1,2 @@
+class HistoricExchangeRate < ApplicationRecord
+end
