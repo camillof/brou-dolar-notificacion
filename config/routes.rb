@@ -9,6 +9,7 @@ Rails.application.routes.draw do
             get 'last'
           end
         end
+        resources :scheduled_jobs, only: [:index, :destroy]
       end
     end
   end
