@@ -1,13 +1,14 @@
 require 'rufus-scheduler'
 
 module ScheduleManager
+  @initialized = false
+
   class << self
     def initialize
       Rails.logger.info 'Initializing scheduler'
       scheduler = Rufus::Scheduler.singleton
 
       def scheduler.on_pre_trigger(job, trigger_time)
-        # byebug
         Rails.logger.info "Excecuting #{job.handler.name}"
         AsyncJobLog.where(jid: job.id).last.update!(
           started_at: Time.now,
@@ -45,11 +46,17 @@ module ScheduleManager
         scheduler.shutdown
         Rails.logger.info "Scheduler off"
       end
+
+      @initialized = true
     end
 
     def schedule_every(time_period, handler_instance)
       unless handler_instance.class.method_defined?(:call)
         raise "#{handler_instance} does not implement 'call' method"
+      end
+
+      unless @initialized
+        raise "ScheduleManager not initialized, please run ScheduleManager.initialize before scheduling"
       end
 
       job = Rufus::Scheduler.singleton.schedule_every time_period, handler_instance
@@ -65,7 +72,27 @@ module ScheduleManager
     end
 
     def unschedule_by_handler_name!(handler_name)
-      Rufus::Scheduler.singleton.find {|job| job.handler.name == handler_name}.unschedule
+      job = Rufus::Scheduler.singleton.jobs.find { |job| job.handler.name == handler_name }
+      job.present? ? job.unschedule : (raise ArgumentError, "no job found with id #{handler_name}")
+      true
+    end
+
+    def unschedule_by_job_id(job_id)
+      Rufus::Scheduler.singleton.unschedule(job_id)
+      true
+    end
+
+    def running_jobs
+      Rufus::Scheduler.singleton.jobs.map do |job|
+        {
+          id: job.id,
+          frequency: job.original,
+          name: job.handler.name,
+          started_at: Time.at(job.scheduled_at.seconds),
+          next_at: Time.at(job.next_time.seconds),
+          last_at: job.last_at ? Time.at(job.last_at.seconds) : nil
+        }
+      end
     end
   end
 end
