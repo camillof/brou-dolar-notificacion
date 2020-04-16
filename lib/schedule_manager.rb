@@ -4,6 +4,10 @@ module ScheduleManager
   @initialized = false
 
   class << self
+    def initialized?
+      @initialized
+    end
+
     def initialize
       Rails.logger.info 'Initializing scheduler'
       scheduler = Rufus::Scheduler.singleton
@@ -69,17 +73,36 @@ module ScheduleManager
       )
 
       Rails.logger.info "#{handler_instance.name} scheduled to run every #{time_period}"
+
+      job
     end
 
     def unschedule_by_handler_name!(handler_name)
-      job = Rufus::Scheduler.singleton.jobs.find { |job| job.handler.name == handler_name }
-      job.present? ? job.unschedule : (raise ArgumentError, "no job found with id #{handler_name}")
+      job = find_job_by_handler_name(handler_name)
+      job.present? ? job.unschedule : (raise ArgumentError, "no job found with handler name #{handler_name}")
       true
     end
 
-    def unschedule_by_job_id(job_id)
-      Rufus::Scheduler.singleton.unschedule(job_id)
+    def unschedule_by_job_id!(job_id)
+      job = find_job_by_id(job_id)
+      job.present? ? job.unschedule : (raise ArgumentError, "no job found with id #{job_id}")
       true
+    end
+
+    def find_job_by_handler_name(handler_name)
+      Rufus::Scheduler.singleton.jobs.find { |job| job.handler.name == handler_name }
+    end
+
+    def find_job_by_id(job_id)
+      Rufus::Scheduler.singleton.jobs(id: job_id).first
+    end
+
+    def job_attributes(job)
+      {
+        started_at: Time.at(job.scheduled_at.seconds),
+        next_at: Time.at(job.next_time.seconds),
+        last_at: job.last_at ? Time.at(job.last_at.seconds) : nil
+      }
     end
 
     def running_jobs
