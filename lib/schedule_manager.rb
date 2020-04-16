@@ -101,7 +101,7 @@ module ScheduleManager
       {
         started_at: Time.at(job.scheduled_at.seconds),
         next_at: Time.at(job.next_time.seconds),
-        last_at: job.last_at ? Time.at(job.last_at.seconds) : nil
+        last_at: job.last_time ? Time.at(job.last_time.seconds) : nil
       }
     end
 
@@ -113,7 +113,7 @@ module ScheduleManager
           name: job.handler.name,
           started_at: Time.at(job.scheduled_at.seconds),
           next_at: Time.at(job.next_time.seconds),
-          last_at: job.last_at ? Time.at(job.last_at.seconds) : nil
+          last_at: job.last_time ? Time.at(job.last_time.seconds) : nil
         }
       end
     end
