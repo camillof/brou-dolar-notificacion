@@ -4,6 +4,9 @@ Rails.application.config.after_initialize do
   if do_initialize
     ScheduleManager.initialize
 
-    ScheduleManager.schedule_every('30m', ExchangeRateHandler.new)
+    Handler.all.each do |handler|
+      handler.start! if handler.enabled?
+    end
+
   end
 end

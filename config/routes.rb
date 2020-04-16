@@ -9,7 +9,12 @@ Rails.application.routes.draw do
             get 'last'
           end
         end
-        resources :scheduled_jobs, only: [:index, :destroy]
+        resources :handlers, only: [:index, :update] do
+          member do
+            put 'start'
+            put 'stop'
+          end
+        end
       end
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_07_231934) do
+ActiveRecord::Schema.define(version: 2020_04_15_234456) do
 
   create_table "async_job_logs", force: :cascade do |t|
     t.string "jid"
@@ -19,6 +19,15 @@ ActiveRecord::Schema.define(version: 2020_04_07_231934) do
     t.datetime "scheduled_at"
     t.datetime "started_at"
     t.datetime "finished_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "handlers", force: :cascade do |t|
+    t.string "name"
+    t.boolean "enabled", default: false
+    t.string "frequency", default: "30m"
+    t.boolean "notifications_enabled", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

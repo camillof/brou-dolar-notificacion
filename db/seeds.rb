@@ -5,3 +5,4 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Handler.create!(name: ExchangeRateHandler::NAME, enabled: true, frequency: '30m', notifications_enabled: true)
