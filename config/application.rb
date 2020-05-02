@@ -37,7 +37,7 @@ module Api
     config.autoload_paths << Rails.root.join('lib', 'handlers')
     config.autoload_paths << Rails.root.join('lib')
 
-    config.active_job.queue_adapter = :sucker_punch
+    # config.active_job.queue_adapter = :sucker_punch
 
     config.time_zone = 'Montevideo'
     config.active_record.default_timezone = :local

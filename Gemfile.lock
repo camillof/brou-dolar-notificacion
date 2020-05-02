@@ -146,8 +146,6 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     sqlite3 (1.4.2)
-    sucker_punch (2.1.2)
-      concurrent-ruby (~> 1.0)
     thor (1.0.1)
     thread_safe (0.3.6)
     tzinfo (1.2.7)
@@ -171,7 +169,6 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3 (~> 1.4)
-  sucker_punch (~> 2.0)
   tzinfo-data
 
 RUBY VERSION
