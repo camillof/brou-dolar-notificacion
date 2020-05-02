@@ -3,7 +3,7 @@ require 'uri'
 require 'json'
 
 module Ifttt
-  KEY = "cFQzbC30_S2sNOTVBbfrOd".freeze
+  KEY = ENV["IFTTT_KEY"].freeze
 
   class << self
     def triggerHook(endpoint, values)
