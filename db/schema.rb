@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_15_234456) do
+ActiveRecord::Schema.define(version: 2020_05_02_064108) do
 
   create_table "async_job_logs", force: :cascade do |t|
     t.string "jid"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2020_04_15_234456) do
     t.boolean "notifications_enabled", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "last_time"
   end
 
   create_table "historic_exchange_rates", force: :cascade do |t|

@@ -1,7 +1,6 @@
 class Api::V1::HistoricExchangeRatesController < ApplicationController
   def index
-    historic_exchange_rates = HistoricExchangeRate.all
-    historic_exchange_rates = historic_exchange_rates.map do |historic_exchange_rate|
+    historic_exchange_rates = HistoricExchangeRate.all.map do |historic_exchange_rate|
       {
         id: historic_exchange_rate.id,
         value: historic_exchange_rate.value,
@@ -15,7 +14,7 @@ class Api::V1::HistoricExchangeRatesController < ApplicationController
   def last
     response = {
       value: HistoricExchangeRate.last&.value,
-      checked_at: AsyncJobLog.finished.where(job_type: ExchangeRateHandler::NAME).last&.finished_at
+      checked_at: Handler.find_by(name: ExchangeRateHandler::NAME).last_time
     }
 
     json_response(response)
