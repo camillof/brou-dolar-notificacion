@@ -9,7 +9,7 @@ class JsonWebToken
                algorithm: 'RS256',
                iss: 'https://millo.auth0.com/',
                verify_iss: true,
-               aud: Rails.application.secrets.auth0_api_audience,
+               aud: ENV["AUTH0_API_AUDIENCE"],
                verify_aud: true) do |header|
       jwks_hash[header['kid']]
     end
