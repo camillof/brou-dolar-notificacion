@@ -46,3 +46,5 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'rufus-scheduler', '~> 3.6', require: false
+
+gem 'jwt'

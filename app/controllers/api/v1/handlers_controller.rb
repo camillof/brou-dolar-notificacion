@@ -1,4 +1,6 @@
 class Api::V1::HandlersController < ApplicationController
+  include Secured
+
   before_action :set_handler, only: [:show, :update, :stop, :start]
 
   def index

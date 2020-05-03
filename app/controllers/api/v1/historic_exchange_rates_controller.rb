@@ -1,4 +1,6 @@
 class Api::V1::HistoricExchangeRatesController < ApplicationController
+  include Secured
+
   def index
     historic_exchange_rates = HistoricExchangeRate.all.map do |historic_exchange_rate|
       {
