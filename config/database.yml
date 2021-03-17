@@ -23,6 +23,6 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: dashboard_api
-  username: dashboard_api
+  database: api_db
+  username: api_db
   password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
