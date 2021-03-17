@@ -2,6 +2,6 @@ namespace :handler do
   desc "Checks the dolar value in BROU page"
 
   task check_exchange_rate: :environment do
-    ExchangeRateHandler.new.call(nil, nil)
+    ExchangeRateHandler.new.call
   end
 end

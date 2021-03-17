@@ -5,7 +5,7 @@ class ExchangeRateHandler < BaseHandler
     super(NAME, Handler.find_by(name: NAME))
   end
 
-  def call(job, time)
+  def call(job = nil, time = nil)
     handler_config.update!(last_time: Time.now)
     Rails.logger.info "Checking dolar value"
     current_dolar_value = ExchangeRate.getDolarValue
