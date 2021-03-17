@@ -1,5 +1,6 @@
 class ExchangeRateHandler < BaseHandler
   NAME = "ExchangeRateHandler".freeze
+  ENDPOINT = ENV["IFTTT_ENDPOINT"].freeze
 
   def initialize
     super(NAME, Handler.find_by(name: NAME))
@@ -15,7 +16,7 @@ class ExchangeRateHandler < BaseHandler
       HistoricExchangeRate.create!(value: current_dolar_value)
       if handler_config.notifications_enabled?
         Rails.logger.info "Dolar changed, sending event"
-        Ifttt.triggerHook('dolar_changed', value1: last_dolar_value, value2: current_dolar_value)
+        Ifttt.triggerHook(ENDPOINT, value1: last_dolar_value, value2: current_dolar_value)
       end
     end
   end
