@@ -5,7 +5,7 @@ class ApplicationController < ActionController::API
   
   
   
-  puts "aaa"
+  puts "aaa";;;
   
   
   
